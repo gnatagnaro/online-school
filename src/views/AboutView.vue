@@ -487,6 +487,62 @@ export default {
         </section>
       </main>
 
+      <section id="comments" class="comments section-offset">
+        <div class="container">
+          <div
+            class="course"
+            v-for="course in fetchElements"
+            :key="course.id"
+            @click="$router.push({ path: `/${course.id}` })"
+          >
+            <img
+              class="course-img"
+              :src="`/images/${course.img}`"
+              :alt="course.alt"
+            />
+            <div class="course-text text">
+              <p class="course-text-title">{{ course.title }}</p>
+              <!-- <span class="filmtext-genre"> {{ course.genre }} </span> -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews" class="reviews section-offset">
+        <div class="container">
+          <div class="form-wrapper">
+            <div class="reviewsup-box up-box">
+              <h2 class="section-title join-us-title">
+                Оставьте ваш комментарий
+              </h2>
+              <p class="reviewserror" v-if="error">
+                Пожалуйста, введите текст отзыва
+              </p>
+              <input
+                type="text"
+                v-model="form.text"
+                class="form-input input-reviews"
+                placeholder="Текст комментария"
+              />
+              <button @click="addComment" class="btn btn-reset form-btn">
+                Оставить комментарий
+              </button>
+            </div>
+            <div class="reviewsdown-box down-box">
+              <p class="down-boxheadding">Комментарии</p>
+              <div
+                v-for="(review, index) in reviews"
+                :key="index"
+                class="reviewinner"
+              >
+                <h3 class="">{{ review.name }}</h3>
+                <p class="review__text">{{ review.text }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer class="footer">
         <div class="container flex footer-container">
           <div class="footer-left flex">
@@ -545,16 +601,65 @@ export default {
   </html>
 </template>
 
-<!-- <script>
-import HelloWorld from "./components/HelloWorld.vue";
+<script>
+// import { minLength } from "vuelidate/lib/validators";
+// import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
-  name: "App",
-  components: {
-    HelloWorld,
+  data: () => ({
+    fetchElements: [],
+    obj: null,
+    reviews: [
+      {
+        name: "Рустам",
+        text: "текст комментария",
+      },
+      {
+        name: "Ивана",
+        text: "еще один текст комментария",
+      },
+    ],
+    form: {
+      name: "",
+      text: "",
+    },
+    error: false,
+  }),
+  async mounted() {
+    try {
+      await fetch("/api/main.json")
+        .then((response) => response.json())
+        .then((data) => (this.fetchElements = data));
+      this.obj = this.fetchElements.filter(
+        (objInfo) => objInfo.id == this.$route.params.id
+      );
+      this.obj = this.obj[0];
+    } catch (e) {
+      console.log(e);
+    }
   },
+  methods: {
+    addComment() {
+      if (this.form.text.length < 4) {
+        this.error = true;
+      } else {
+        this.reviews.reverse();
+        this.reviews.push({
+          name: "Рустам",
+          text: this.form.text,
+        });
+      }
+    },
+  },
+  // validations: {
+  //   form: {
+  //     text: {
+  //       minLength: minLength(4),
+  //     },
+  //   },
+  // },
 };
-</script> -->
+</script>
 
 <style>
 #app {
@@ -1136,5 +1241,26 @@ ul {
 
 .social-link-mail {
   background-image: url("@/../public/img/mail-logo.svg");
+}
+
+/* / * reviews */
+
+.input-reviews {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.comments {
+  display: flex;
+  text-align: center;
+}
+
+.reviews {
+  display: flex;
+  text-align: center;
+}
+
+.reviewinner {
+  text-align: start;
 }
 </style>
