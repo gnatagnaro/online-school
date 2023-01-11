@@ -487,22 +487,21 @@ export default {
         </section>
       </main>
 
-      <section id="comments" class="comments section-offset">
-        <div class="container">
+      <section id="json-section" class="json-section section-offset">
+        <div class="container flex">
           <div
-            class="course"
+            class="course-json"
             v-for="course in fetchElements"
             :key="course.id"
-            @click="$router.push({ path: `/${course.id}` })"
+            @click="$router.push({ path: `/About/${course.id}` })"
           >
             <img
               class="course-img"
-              :src="`/images/${course.img}`"
+              :src="`/img/${course.img}`"
               :alt="course.alt"
             />
-            <div class="course-text text">
-              <p class="course-text-title">{{ course.title }}</p>
-              <!-- <span class="filmtext-genre"> {{ course.genre }} </span> -->
+            <div class="course-text">
+              <p class="course-text-title">{{ course.name }}</p>
             </div>
           </div>
         </div>
@@ -536,7 +535,7 @@ export default {
                 class="reviewinner"
               >
                 <h3 class="">{{ review.name }}</h3>
-                <p class="review__text">{{ review.text }}</p>
+                <p class="">{{ review.text }}</p>
               </div>
             </div>
           </div>
@@ -547,11 +546,7 @@ export default {
         <div class="container flex footer-container">
           <div class="footer-left flex">
             <a href="#" class="footer-logo">
-              <img
-                src="@/../public/img/logo.svg"
-                alt="Logo"
-                class="footer-logo"
-              />
+              <img src="#" alt="Logo" class="footer-logo" />
             </a>
             <small class="footer-copy"
               >Copyright ©2023. All Right Reserved</small
@@ -1248,6 +1243,8 @@ ul {
 .input-reviews {
   margin: 0;
   margin-right: 10px;
+  margin-bottom: 10px;
+  width: 1130px;
 }
 
 .comments {
@@ -1262,5 +1259,27 @@ ul {
 
 .reviewinner {
   text-align: start;
+}
+
+.course-json {
+  min-width: 570px;
+  flex-wrap: wrap;
+}
+
+.course-json img {
+  height: 430px;
+}
+
+.course-json:not(:nth-child(2n)) {
+  margin-right: 30px;
+}
+
+.course-text-title {
+  margin: 0;
+  margin-bottom: 15px;
+  font-size: 20px;
+  line-height: 130%;
+  color: #1c1c1c;
+  text-align: center;
 }
 </style>

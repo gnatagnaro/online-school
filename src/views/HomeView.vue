@@ -499,11 +499,7 @@ export default {
         <div class="container flex footer-container">
           <div class="footer-left flex">
             <a href="#" class="footer-logo">
-              <img
-                src="@/../public/img/logo.svg"
-                alt="Logo"
-                class="footer-logo"
-              />
+              <img src="" alt="Logo" class="footer-logo" />
             </a>
             <small class="footer-copy"
               >Copyright ©2023. All Right Reserved</small
